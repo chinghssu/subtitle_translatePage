@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "字幕簡轉繁 for streamtranslate.live",
+  "version": "0.1.0",
+  "description": "即時將 streamtranslate.live 的簡體字幕轉成繁體（台灣正體），供 OBS 視窗擷取使用。",
+  "permissions": ["storage"],
+  "host_permissions": ["https://streamtranslate.live/*", "https://*.streamtranslate.live/*"],
+  "action": {
+    "default_title": "字幕簡轉繁設定",
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://streamtranslate.live/*", "https://*.streamtranslate.live/*"],
+      "js": ["vendor/opencc/cn2t.js", "src/content.js"],
+      "css": ["src/overlay.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

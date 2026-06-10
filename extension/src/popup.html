@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>字幕簡轉繁設定</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      width: 300px; margin: 0; padding: 14px 16px;
+      font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+      background: #1e1e1e; color: #eee; font-size: 13px;
+    }
+    h1 { font-size: 15px; margin: 0 0 12px; }
+    .row { display: flex; align-items: center; justify-content: space-between; margin: 9px 0; gap: 8px; }
+    .row label { flex: 0 0 auto; }
+    .row .ctrl { flex: 1 1 auto; display: flex; justify-content: flex-end; align-items: center; gap: 6px; }
+    input[type="range"] { width: 120px; }
+    input[type="text"], select { background: #2b2b2b; color: #eee; border: 1px solid #444; border-radius: 4px; padding: 4px 6px; }
+    input[type="text"] { width: 100%; box-sizing: border-box; }
+    input[type="color"] { width: 34px; height: 24px; padding: 0; border: 1px solid #444; background: none; }
+    .val { min-width: 34px; text-align: right; color: #9cdcfe; }
+    hr { border: none; border-top: 1px solid #333; margin: 12px 0; }
+    .switch { display: inline-flex; align-items: center; cursor: pointer; }
+    .switch input { margin-right: 6px; transform: scale(1.2); }
+    .field { display: block; margin: 9px 0; }
+    .field > span { display: block; margin-bottom: 4px; color: #bbb; }
+    .hint { color: #888; font-size: 11px; margin-top: 2px; }
+    button { width: 100%; margin-top: 10px; padding: 7px; border: none; border-radius: 5px; background: #0e639c; color: #fff; cursor: pointer; font-size: 13px; }
+    button:hover { background: #1177bb; }
+  </style>
+</head>
+<body>
+  <h1>字幕簡轉繁設定</h1>
+
+  <div class="row">
+    <label class="switch"><input type="checkbox" id="enabled" /> 啟用字幕</label>
+    <label class="switch"><input type="checkbox" id="obsMode" /> OBS 模式</label>
+  </div>
+
+  <div class="field">
+    <span>轉換方案</span>
+    <select id="conversion">
+      <option value="twp">簡 → 繁（台灣正體 + 慣用詞）</option>
+      <option value="tw">簡 → 繁（台灣正體）</option>
+      <option value="t">簡 → 繁（OpenCC 標準）</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <span>字幕選擇器（CSS，留空自動偵測）</span>
+    <input type="text" id="subtitleSelector" placeholder="例如 .subtitle-text" />
+    <div class="hint">原站字幕沒出現時，在字幕上右鍵→檢查，貼上其 class/id。</div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <label>字體大小</label>
+    <div class="ctrl"><input type="range" id="fontSize" min="16" max="120" /><span class="val" id="fontSizeVal"></span></div>
+  </div>
+  <div class="row">
+    <label>文字顏色</label>
+    <div class="ctrl"><input type="color" id="color" /></div>
+  </div>
+  <div class="row">
+    <label>外框粗細</label>
+    <div class="ctrl"><input type="range" id="textStroke" min="0" max="10" /><span class="val" id="textStrokeVal"></span></div>
+  </div>
+  <div class="row">
+    <label>外框顏色</label>
+    <div class="ctrl"><input type="color" id="strokeColor" /></div>
+  </div>
+  <div class="row">
+    <label>背景顏色</label>
+    <div class="ctrl"><input type="color" id="bgColor" /></div>
+  </div>
+  <div class="row">
+    <label>背景透明度</label>
+    <div class="ctrl"><input type="range" id="bgOpacity" min="0" max="100" /><span class="val" id="bgOpacityVal"></span></div>
+  </div>
+  <div class="field">
+    <span>位置</span>
+    <select id="position">
+      <option value="bottom">底部</option>
+      <option value="center">中間</option>
+      <option value="top">頂部</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>最大行數</label>
+    <div class="ctrl"><input type="range" id="maxLines" min="1" max="5" /><span class="val" id="maxLinesVal"></span></div>
+  </div>
+
+  <button id="reset">回復預設值</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
