@@ -9,7 +9,7 @@ const DEFAULTS = {
     fontSize: 48, color: "#ffffff",
     fontFamily: "'Noto Sans TC', 'Microsoft JhengHei', sans-serif",
     textStroke: 2, strokeColor: "#000000",
-    bgColor: "#000000", bgOpacity: 0,
+    bgColor: "#00b140", bgOpacity: 1,
     position: "bottom", maxLines: 2, opacity: 1
   }
 };

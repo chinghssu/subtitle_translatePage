@@ -12,8 +12,8 @@ const DEFAULTS = {
     fontFamily: "'Noto Sans TC', 'Microsoft JhengHei', sans-serif",
     textStroke: 2,
     strokeColor: "#000000",
-    bgColor: "#000000",
-    bgOpacity: 0,
+    bgColor: "#00b140", // chroma 綠底，供後製去背
+    bgOpacity: 1,
     position: "bottom", // "top" | "center" | "bottom"
     maxLines: 2,
     opacity: 1

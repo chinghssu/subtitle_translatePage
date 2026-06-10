@@ -7,6 +7,10 @@
   const OVERLAY_ID = "stt-tw-overlay";
   const CJK_RE = /[一-鿿㐀-䶿]/;
 
+  // streamtranslate.live 的「What Viewers See」譯文面板。
+  // 留空自訂選擇器時優先鎖定此處（而非原文「What I'm Saying」#previewOriginal）。
+  const DEFAULT_SELECTOR = "#previewTranslated";
+
   // 找不到自訂選擇器時，依序嘗試的常見字幕容器
   const FALLBACK_SELECTORS = [
     "[class*='subtitle']",
@@ -45,7 +49,7 @@
       el = document.createElement("div");
       el.id = OVERLAY_ID;
       const box = document.createElement("div");
-      box.className = "stt-tw-box";
+      box.className = "stt-tw-frame";
       const text = document.createElement("p");
       text.className = "stt-tw-text";
       box.appendChild(text);
@@ -86,11 +90,20 @@
   }
 
   // ---------- 字幕擷取 ----------
+  // 濾掉等待中的 placeholder（譯文尚未出現）；回傳陣列可能為空 = 暫無字幕。
+  function usableNodes(nodes) {
+    return Array.from(nodes).filter((n) => !n.classList.contains("placeholder"));
+  }
+
   function pickTargets() {
     if (settings?.subtitleSelector) {
       const nodes = document.querySelectorAll(settings.subtitleSelector);
-      if (nodes.length) return Array.from(nodes);
+      if (nodes.length) return usableNodes(nodes);
       console.warn("[STT-TW] 自訂選擇器找不到元素：", settings.subtitleSelector);
+    } else {
+      // 鎖定譯文面板；存在即固定使用，避免退回啟發式而抓到原文（What I'm Saying）
+      const def = document.querySelectorAll(DEFAULT_SELECTOR);
+      if (def.length) return usableNodes(def);
     }
     for (const sel of FALLBACK_SELECTORS) {
       const nodes = document.querySelectorAll(sel);
@@ -166,8 +179,8 @@
       settings = { enabled: true, conversion: "twp", subtitleSelector: "",
         style: { fontSize: 48, color: "#ffffff",
           fontFamily: "'Noto Sans TC','Microsoft JhengHei',sans-serif",
-          textStroke: 2, strokeColor: "#000000", bgColor: "#000000",
-          bgOpacity: 0, position: "bottom", maxLines: 2, opacity: 1 } };
+          textStroke: 2, strokeColor: "#000000", bgColor: "#00b140",
+          bgOpacity: 1, position: "bottom", maxLines: 2, opacity: 1 } };
     }
     converter = buildConverter(settings.conversion);
     applyStyle();

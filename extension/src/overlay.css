@@ -18,9 +18,14 @@
 #stt-tw-overlay[data-position="center"] { top: 50%; transform: translateY(-50%); align-items: center; }
 #stt-tw-overlay[data-position="bottom"] { bottom: 0; align-items: flex-end; }
 
-#stt-tw-overlay .stt-tw-box {
+/* 類名刻意不含 box/panel/card 等字樣，避開原站 [class*="box"] !important catch-all。
+   關鍵屬性另加 !important，確保綠底與固定寬度不被原站樣式覆蓋。 */
+#stt-tw-overlay .stt-tw-frame {
+  /* 固定寬度，讓綠底維持一致矩形，方便後製去背/挖洞做動畫 */
+  width: var(--stt-box-width, 60vw) !important;
   max-width: 90%;
-  background: var(--stt-bg, rgba(0, 0, 0, 0));
+  box-sizing: border-box;
+  background: var(--stt-bg, rgba(0, 0, 0, 0)) !important;
   border-radius: 8px;
   padding: 8px 18px;
   line-height: 1.3;
