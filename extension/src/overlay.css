@@ -33,6 +33,11 @@
 
 #stt-tw-overlay .stt-tw-text {
   margin: 0;
+  /* 固定為兩行高度：單行字幕時綠底仍維持兩行大小，文字置底 */
+  min-height: calc(var(--stt-font-size, 48px) * 1.3 * 2);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   font-size: var(--stt-font-size, 48px);
   color: var(--stt-color, #ffffff);
   font-weight: 700;
